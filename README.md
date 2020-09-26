@@ -10,7 +10,6 @@ It will prompt you for usage
 
 Running the API in k8s:
 Pre-requisites:
-MacOS
-virtualBox
+MacOS, virtualBox
 
 Run the bash script k8s.sh.
