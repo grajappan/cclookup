@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cclookup-deployment
+  labels:
+    app: cclookup
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cclookup
+  template:
+    metadata:
+      labels:
+        app: cclookup
+    spec:
+      containers:
+      - name: cclookup
+        image: grajappan4401/cclookup:latest
+        ports:
+        - containerPort: 4080
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 4080
+            httpHeaders:
+            - name: Content-Type
+              value: appliction/text
+          initialDelaySeconds: 10
+          periodSeconds: 3
+    
