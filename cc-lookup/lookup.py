@@ -22,7 +22,8 @@ def lookup(cc):
             if k == cc:
                 for i in v:
                     if i == 'name':
-                        countryName=v['name']
+                        countryName=v['name'] 
+    #Can use this way as well countryName = cdict['data'].get(cc).get('name')
     if countryName != '':
         return (countryName)
     else:
