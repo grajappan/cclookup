@@ -2,7 +2,7 @@ pipeline {
     agent none
     stages {
         stage('Build docker') {
-            agent { lable Agent }
+            agent { lable 'Agent' }
             steps {
                 echo 'Hello Docker Agent'
                 sh 'docker images'
