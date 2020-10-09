@@ -1,12 +1,16 @@
 pipeline {
-    agent none
+    agent {
+        dockerfile {
+            filename 'Dockerfile'
+            label 'JenkinsBuild'
+        }
+    }
     stages {
-        stage('Build docker') {
-            agent { label 'Agent' }
+        stage ('List images') {
             steps {
-                echo 'Hello Docker Agent'
                 sh 'docker images'
             }
         }
     }
 }
+
