@@ -2,7 +2,7 @@ pipeline {
     agent {
         dockerfile {
             filename 'Dockerfile'
-            label 'JenkinsBuild'
+            label 'logslave1'
         }
     }
     stages {
