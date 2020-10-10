@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: cclookup
-        image: grajappan4401/cclookup:jenkinsbuild
+        image: registry.hub.docker.com/grajappan4401/cclookup:jenkinsbuild
         ports:
         - containerPort: 4080
         livenessProbe:

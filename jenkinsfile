@@ -26,14 +26,12 @@ pipeline {
         }     
         stage ('Deploy to Kube cluster') {
             steps {
-                kubernetesDeploy (
-                    configs: 'cclookup.yaml', 
-                    kubeConfig: [path: ''], 
-                    kubeconfigId: 'Kube Connection', 
-                    secretName: '', 
-                    ssh: [sshCredentialsId: '*', sshServer: ''], 
-                    textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
-                )
+                script {
+                    withKubeConfig([credentialsId: 'Dell KubeConfig']) {
+                        sh 'kubectl apply -f cclookup.yaml'
+                    }
+                }
+
             }
         }
     }
