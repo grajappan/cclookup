@@ -8,15 +8,21 @@ pipeline {
                 sh 'docker build -t grajappan4401/cclookup:jenkinsbuild .'
             }
         }
+        stage ('Push Image') {
+            steps {
+                sh 'docker push grajappan4401/cclookup:jenkinsbuild'
+            }
+        }
         stage ('Deploy to Kube cluster') {
             steps {
                 kubernetesDeploy (
-                    configs: '**/*.yaml', 
+                    configs: 'cclookup.yaml', 
                     kubeConfig: [path: ''], 
                     kubeconfigId: 'Kube Connection', 
                     secretName: '', 
                     ssh: [sshCredentialsId: '*', sshServer: ''], 
                     textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+                )
             }
         }
     }
