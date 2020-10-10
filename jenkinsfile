@@ -1,13 +1,12 @@
 pipeline {
     agent { 
-        label 'logslave1'
-    }
-    node {
-        checkout scm
-        docker.withRegistry('https://hub.docker.com/repository/docker/grajappan4401/cclookup/','DockerHub-Creds')
-            def image = docker.build("grajappan4401/cclookup:jenkinsbuild")
-            image.push()
-    }
+        node {
+            label 'logslave1'
+            checkout scm
+            docker.withRegistry('https://hub.docker.com/repository/docker/grajappan4401/cclookup/','DockerHub-Creds')
+                def image = docker.build("grajappan4401/cclookup:jenkinsbuild")
+                image.push()
+        }
     stages {     
         stage ('Deploy to Kube cluster') {
             steps {
