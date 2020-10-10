@@ -3,9 +3,10 @@ pipeline {
         node {
             label 'logslave1'
             checkout scm
-            docker.withRegistry('https://hub.docker.com','DockerHub-Creds')
+            docker.withRegistry('https://hub.docker.com','DockerHub-Creds') {
                 def image = docker.build("grajappan4401/cclookup:jenkinsbuild")
                 image.push()
+            }
         }
     }
     stages {     
