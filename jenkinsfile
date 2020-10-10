@@ -7,6 +7,7 @@ pipeline {
                 def image = docker.build("grajappan4401/cclookup:jenkinsbuild")
                 image.push()
         }
+    }
     stages {     
         stage ('Deploy to Kube cluster') {
             steps {
