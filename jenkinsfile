@@ -5,14 +5,16 @@ pipeline {
     stages {
         stage ('Build and Push Image') {
             steps {
-                withDockerServer([uri: "tcp://192.168.1.97:2376"])  {
-                    withCredentials([usernamePassword(credentialsId: 'DockerHub-Creds', passwordVariable: 'DOCKER_REGISTRY_PASSWORD', usernameVariable: 'DOCKER_REGISTRY_USER')]) 
-                        docker.withRegistry('https://hub.docker.com/repository/docker/grajappan4401/cclookup', 'docker-hub-credentials') {
-                            sh "docker login -u ${DOCKER_REGISTRY_USER} -p ${DOCKER_REGISTRY_PASSWORD}"
-                            def image = docker.build("grajappan4401/cclookup")
-                            image.push("jenkinsbuild")
+                script {
+                    withDockerServer([uri: "tcp://192.168.1.97:2376"]) {
+                        withCredentials([usernamePassword(credentialsId: 'DockerHub-Creds', passwordVariable: 'DOCKER_REGISTRY_PASSWORD', usernameVariable: 'DOCKER_REGISTRY_USER')]) 
+                            docker.withRegistry('https://hub.docker.com/repository/docker/grajappan4401/cclookup', 'docker-hub-credentials') {
+                                sh "docker login -u ${DOCKER_REGISTRY_USER} -p ${DOCKER_REGISTRY_PASSWORD}"
+                                def image = docker.build("grajappan4401/cclookup")
+                                image.push("jenkinsbuild")
+                            }
                         }
-                    }
+                    } 
                 }   
         }    
         stage ('Deploy to Kube cluster') {
