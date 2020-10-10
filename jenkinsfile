@@ -1,16 +1,25 @@
 pipeline {
-    agent {
-        dockerfile {
-            filename 'Dockerfile'
-            label 'logslave1'
-        }
+    agent { 
+        label 'logslave1'
     }
     stages {
-        stage ('List images') {
+        stage ('Build docker') {
             steps {
-                sh 'docker images'
+                sh 'docker build -t grajappan4401/cclookup:jenkinsbuild .'
+            }
+        }
+        stage ('Deploy to Kube cluster') {
+            steps {
+                kubernetesDeploy (
+                    configs: '**/*.yaml', 
+                    kubeConfig: [path: ''], 
+                    kubeconfigId: 'Kube Connection', 
+                    secretName: '', 
+                    ssh: [sshCredentialsId: '*', sshServer: ''], 
+                    textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
             }
         }
     }
 }
+
 
