@@ -28,7 +28,7 @@ pipeline {
             steps {
                 script {
                     withKubeConfig([credentialsId: 'Dell KubeConfig']) {
-                        sh 'kubectl apply -f cclookup.yaml'
+                        sh 'kubectl apply -f cclookupv2.yaml'
                     }
                 }
 
