@@ -1,0 +1,11 @@
+groups:
+- name: cclookup-down
+  rules:
+  - alert: CCLookupDown
+    annotations:
+      summary: "Instance {{ $labels.instance }} down."
+    expr: up == 0
+    for: 1m
+    labels:
+      severity: critical
+      service: cclookup
